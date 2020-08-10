@@ -52,8 +52,17 @@ client.on("message", async message => {
 
     if (!command) return message.channel.send(messages.commandNotExist);
 
-    if (command.guildOnly && message.channel.type !== 'text') {
-        return message.reply("I can\'t execute that command in DMs!");
+    try {
+        
+        if (command.modOnly) {
+            return message.channel.send('No Permission.');
+        }
+
+        if (command.guildOnly && message.channel.type !== 'text') {
+            return message.reply("I can\'t execute that command in DMs!");
+        }
+    } catch(err) {
+        return;
     }
 
     try {
